@@ -48,7 +48,7 @@ soket
 #### -SOCKADDR_IN
 
 ```
-SOCKADDR_IN addr;
+SOCKADDR_IN addr;		//IPv4 전용	SOCKADDR : 범용
 memset(&addr, 0, sizeof(SOCKADDR_IN));	// 메모리 셋 
 ```
 
