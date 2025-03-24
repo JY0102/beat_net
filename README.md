@@ -4,7 +4,7 @@
 #include <winsock2.h>
 ```
 
-## Sever_socket
+## __Sever_socket__
 
 
 ```
@@ -24,7 +24,7 @@ WSACleanup(); -> 종료
 
 ### 소켓 생성
 
-#### socket()
+#### -socket()
 ```
 SOCKET listen_sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 // AF_INET : TCP / UDP //  SOCK_STREAM : TCP 
@@ -45,7 +45,7 @@ soket
     2. SOCK_STREAM // TCP / UDP 사용
     3. ( TCP or UDP 사용 여부 ) IPPROTO_TCP : tcp // IPPROTO_UPD : upd
 ```
-#### SOCKADDR_IN
+#### -SOCKADDR_IN
 
 ```
 SOCKADDR_IN addr;
@@ -62,7 +62,7 @@ SOCKADDR_IN
   4. CHAR sin_zero[8];            // 빈공간
 }
 ```
-#### bind
+#### -bind
 
 ```
 addr.sin_family = AF_INET;				          -> IPv4 선언
@@ -86,7 +86,7 @@ bind    반환값 :  -1(SOCKET_ERROR)  오류
 ```
 
 
-#### Listen
+#### -Listen
 
 ```
 ret = listen(listen_sock, SOMAXCONN);
@@ -102,7 +102,7 @@ if (ret == SOCKET_ERROR)
 
 ### 연결 대기
 
-#### accept
+#### -accept
 ```
 SOCKADDR_IN client_addr;
 memset(&client_addr, 0, sizeof(SOCKADDR_IN));  // 구조체 초기화.
@@ -124,7 +124,7 @@ accept
 ### 메세지 수신
 
 
-#### recv
+#### -recv
 
 ```
 har buf[1024];
@@ -158,7 +158,7 @@ recv
 
 ### 메세지 송신
 
-#### send
+#### -send
 
 ```
 char buf[1024];
