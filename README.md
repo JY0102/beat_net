@@ -33,11 +33,16 @@ if (listen_sock == INVALID_SOCKET)      // INVALID_SOCKET
 	printf(" 소켓 생성 실패\n");
 	return -1;
 }
-
-
 closesocket(sock);	-> 소켓 종료료
 ```
 
+```
+socket
+  매개변수
+    1. 주소 체계 (프르토콜마다 다름 TCP + UDP = AF_INET
+    2. 데이터 통신을 위한 사용할 프로토콜 유형 ( TPC : SOCK_STREAM  , UDP : SOCK_DGRAM ) 
+    3. 프로토콜 결정 
+```
 ```
 soket
   매개변수
