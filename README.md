@@ -50,6 +50,10 @@ soket
 ```
 SOCKADDR_IN addr;		//IPv4 전용	SOCKADDR : 범용
 memset(&addr, 0, sizeof(SOCKADDR_IN));	// 메모리 셋 
+
+addr.sin_family = AF_INET;			  -> IPv4 선언
+addr.sin_addr.s_addr = htonl(INADDR_ANY);	  -> 누구나 들어 올 수 있음
+addr.sin_port = htons(SERVER_PROT);		  -> 포트 번호 입력.
 ```
 
 ```
@@ -65,10 +69,6 @@ SOCKADDR_IN
 #### -bind
 
 ```
-addr.sin_family = AF_INET;				          -> IPv4 선언
-addr.sin_addr.s_addr = htonl(INADDR_ANY);	  -> 누구나 들어 올 수 있음
-addr.sin_port = htons(SERVER_PROT);			    -> 포트 번호 입력.
-
 int ret = bind(listen_sock, (SOCKADDR*)&addr, sizeof(addr));
 if (ret == SOCKET_ERROR)
 {
@@ -179,7 +179,15 @@ send
 
 ## client socket
 
-### 초기화 / 생성  동일
+### 초기화 / 소켓 생성 동일
+
+### 소켓 구조체 초기화
+
+```
+addr.sin_family = AF_INET;			  -> IPv4 선언
+addr.sin_addr.s_addr = inet_addr(SEVER_IP);	  -> 서버 IP ( 정수 형으로 전송 ) 
+addr.sin_port = htons(SERVER_PROT);		  -> 포트 번호 입력.
+```
 
 ### 소켓 연결
 
@@ -188,8 +196,8 @@ send
 SOCKADDR_IN addr;
 memset(&addr, 0, sizeof(SOCKADDR_IN));				
 addr.sin_family = AF_INET;				// IP type				
-addr.sin_addr.s_addr = inet_addr(SERVER_IP);		// 접속하고 싶은 SEVER IP 
-addr.sin_port = htons(SERVER_PROT);			// 포트 번호
+addr.sin_addr.s_addr = inet_addr(SERVER_IP);		// 접속하고 싶은 SEVER IP   ( inet_addr 로 정수값으로 변환 ) 
+addr.sin_port = htons(SERVER_PROT);			// 포트 번호		    ( 포트 번호는 htons 로 서버와 클라이언트 통일 ) 
 
 int ret = connect(sock, (SOCKADDR*)&addr, sizeof(SOCKADDR_IN));
 if (ret == SOCKET_ERROR)
@@ -200,9 +208,6 @@ if (ret == SOCKET_ERROR)
 ```
 
 ```
-connect
-   매개변수
-	1. 
 connect
   매개변수
     	1. 통신 소켓 핸들값
@@ -256,6 +261,7 @@ inet_ntoa(addr.sin_addr);
 - IPv4 에서만 사용 가능
 
 매개변수  : netwrok -> host 또는 host -> network 로 변환 할 때 정수 -> 문자열로 변환
+보통 ip 값을 변환
 ```
 
 ```
@@ -266,6 +272,7 @@ inet_addr("1.2.3.4);
 - IPv4 에서만 사용 가능
 
 매개변수 : inet_ntoa 처럼 변환은 동일 / 문자열 -> 정수 변환.
+보통 ip 값을 변환
 ```
 
 ## htons + ntohs
