@@ -33,6 +33,9 @@ if (listen_sock == INVALID_SOCKET)      // INVALID_SOCKET
 	printf(" 소켓 생성 실패\n");
 	return -1;
 }
+
+
+closesocket(sock);	-> 소켓 종료료
 ```
 
 ```
@@ -174,13 +177,41 @@ send
 ```
 
 
+## client socket
+
+### 초기화 / 생성  동일
+
+### 소켓 연결
+
+#### connect 
+```
+SOCKADDR_IN addr;
+memset(&addr, 0, sizeof(SOCKADDR_IN));				
+addr.sin_family = AF_INET;				// IP type				
+addr.sin_addr.s_addr = inet_addr(SERVER_IP);		// 접속하고 싶은 SEVER IP 
+addr.sin_port = htons(SERVER_PROT);			// 포트 번호
+
+int ret = connect(sock, (SOCKADDR*)&addr, sizeof(SOCKADDR_IN));
+if (ret == SOCKET_ERROR)
+{	
+	printf(" connect  실패\n");
+	return -1;
+}	
+```
+
+```
+connect
+   매개변수
+	1. 
+connect
+  매개변수
+    	1. 통신 소켓 핸들값
+	2. 소켓 구조체 주소값
+    	3. 사이즈	
+```
 
 
-
-
-
-
-
+### 메세지 송수신 동일
 
 
 
