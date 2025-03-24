@@ -214,11 +214,75 @@ connect
 ### 메세지 송수신 동일
 
 
+# 이모저모
 
+## union
 
+```
+typedef struct in_addr {
+        union {
+                struct { UCHAR s_b1,s_b2,s_b3,s_b4; } S_un_b;
+                struct { USHORT s_w1,s_w2; } S_un_w;
+                ULONG S_addr;
+        } S_un;
+#define s_addr  S_un.S_addr /* can be used for most tcp & ip code */
+#define s_host  S_un.S_un_b.s_b2    // host on imp
+#define s_net   S_un.S_un_b.s_b1    // network
+#define s_imp   S_un.S_un_w.s_w2    // imp
+#define s_impno S_un.S_un_b.s_b4    // imp #
+#define s_lh    S_un.S_un_b.s_b3    // logical host
+} IN_ADDR, *PIN_ADDR, FAR *LPIN_ADDR;
+```
 
+```
+- 유니온 끼리는 메모리를 공유함.
+	-> 분할 / 조립 용도로 활용 가능
 
+예시)
+in_addr add; -> 구조체 선언
 
+add.S_ddr =  ip 값 입력
+
+add.S_un_b.s_b1 => 으로 1byte씩 출력가능
+```
+
+## inet_ntoa + inet_addr
+
+```
+inet_ntoa(addr.sin_addr);	
+```
+
+```
+- IPv4 에서만 사용 가능
+
+매개변수  : netwrok -> host 또는 host -> network 로 변환 할 때 정수 -> 문자열로 변환
+```
+
+```
+inet_addr("1.2.3.4);
+```
+
+```
+- IPv4 에서만 사용 가능
+
+매개변수 : inet_ntoa 처럼 변환은 동일 / 문자열 -> 정수 변환.
+```
+
+## htons + ntohs
+
+```
+// 소켓에서 주로 사용
+// host byte -> network byte	 ( 빅 엔디안 방식으로 전송 ) 
+htons -> host to net short
+htonl -> host to net long
+```
+
+```
+// 프로그램에서  사용
+// network byte -> host byte	( 빅 엔디안 , 리틀 엔디안 사용자 지정해서 전송 ) 
+ntohs -> net to host short
+ntohl -> net to host long
+```
 
 
 
